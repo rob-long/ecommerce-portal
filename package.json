@@ -1,0 +1,50 @@
+{
+  "name": "Nutrigene Dashboard Case Study",
+  "version": "1.0.0",
+  "description":
+    "Portal for Nutrigene clients to view their vitamin score and order history",
+  "main": "index.js",
+  "engines": {
+    "node": "8.11.2",
+    "npm": "6.1.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild":
+      "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "webhook": "node_modules/ngrok/bin/ngrok http 5000"
+  },
+  "author": "Robert Long",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.0",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.3",
+    "localtunnel": "^1.9.0",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.1.6",
+    "ngrok": "^3.0.1",
+    "nodemon": "^1.17.5",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "path-parser": "^4.1.1",
+    "sendgrid": "^5.2.3",
+    "stripe": "^6.1.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.9.1",
+    "prettier": "1.13.5"
+  }
+}
