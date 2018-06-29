@@ -10,9 +10,9 @@ import App from "./components/App";
 import "./index.css";
 import rootReducer from "./reducers";
 import axios from "axios";
-import $ from "jquery";
 import "./vendor/js/bootstrap/collapse.js";
-import "./vendor/dist/toolkit";
+//import $ from "jquery";
+//import "./vendor/dist/toolkit";
 window.axios = axios;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

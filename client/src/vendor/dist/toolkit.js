@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*!
  * Bootstrap
  * Copyright 2011-2016

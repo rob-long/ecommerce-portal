@@ -8,8 +8,9 @@ import Dashboard from "./Dashboard";
 import SurveyNew from "./surveys/SurveyNew";
 import SurveyFormReview from "./surveys/SurveyFormReview";
 import Orders from "./Orders/";
-import OrderView from "./orders/OrderView";
+import OrderView from "./Orders/OrderView";
 import Profile from "./Profile";
+import ProductList from "./ProductList/";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -42,6 +43,7 @@ class App extends Component {
                 <Route path="/orders/:id" component={OrderView} />
                 <Route path="/orders" component={Orders} />
                 <Route path="/profile" component={Profile} />
+                <Route path="/products" component={ProductList} />
               </Switch>
             </div>
           </div>

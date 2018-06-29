@@ -18,7 +18,7 @@ class NavButton extends Component {
     return (
       <li className="nav-item">
         <Link
-          className={this.state.active ? `active nav-link` : `nav-link`}
+          className="nav-link"
           to={this.props.to}
           onClick={this.handleOnClick}
         >

@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import NavButton from "./NavButton";
-import Payment from "./Payment";
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props.match);
+    this.state = { activeNav: null };
+  }
+
   login() {
     const auth = this.props.auth;
     if (auth === null) {
       return;
     } else if (auth) {
       return [
-        <li className="nav-item" key="payment">
-          <Payment />
-        </li>,
         <NavButton key="credits" to="/surveys">
           Credits: {auth.credits}
         </NavButton>,
@@ -56,11 +58,14 @@ class Header extends Component {
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">Dashboards</li>
               <li className="nav-item">
-                <a className="nav-link " href="../index-light/index.html">
-                  Overview
+                <a className="nav-link " href="/">
+                  Your Profile
                 </a>
               </li>
-              <NavButton key="order-history" to="/orders">
+              <NavButton key="products" to="/products">
+                Shop
+              </NavButton>
+              <NavButton key="orders" to="/orders">
                 Order History
               </NavButton>
             </ul>
@@ -72,21 +77,6 @@ class Header extends Component {
         </nav>
       </div>
     );
-    /*
-    return (
-      <nav>
-        <div classNameName="nav-wrapper">
-          <Link
-            to={this.props.auth ? "/surveys" : "/"}
-            classNameName="left brand-logo"
-          >
-            Sendy
-          </Link>
-          <ul classNameName="right">{this.login()}</ul>
-        </div>
-      </nav>
-    );
-    */
   }
 }
 

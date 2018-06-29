@@ -1,11 +1,15 @@
 {
-  "name": "Nutrigene Dashboard",
+  "name": "nutrigene-dashboard",
   "version": "1.0.0",
   "description": "Portal for Nutrigene clients to view their vitamin score and order history",
   "main": "index.js",
   "engines": {
     "node": "8.11.2",
     "npm": "6.1.0"
+  },
+  "repository": {
+  "type": "git",
+  "url": "git@github.com:rob-long/ecommerce-portal.git"
   },
   "scripts": {
     "start": "node index.js",
