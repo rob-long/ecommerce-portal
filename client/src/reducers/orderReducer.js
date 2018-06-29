@@ -7,7 +7,7 @@ export default function(state = [], action) {
       const data = action.payload.data;
       const convertEpoch = data.map(order => {
         order.created = new Date(order.created * 1000).toLocaleDateString();
-        order.amount = `\$${order.amount / 100}`;
+        order.amount = `${order.amount / 100}`;
       });
       return action.payload.data;
     default:

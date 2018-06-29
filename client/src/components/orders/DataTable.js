@@ -6,23 +6,36 @@ import {
   TableHeaderColumn,
   ExportCSVButton
 } from "react-bootstrap-table";
+import { Redirect } from "react-router";
 
 import { fetchOrders } from "../../actions";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class DataTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { redirect: false };
+  }
+
   componentDidMount() {
     this.props.fetchOrders();
   }
 
-  renderOrder(post) {
-    const route = `/posts/${post.id}`;
+  renderOrder(order) {
+    const route = `/orders/${order.id}`;
     return (
-      <li className="list-group-item" key={post.id}>
-        <Link to={route}> {post.title} </Link>
+      <li className="list-group-item" key={order.id}>
+        <Link to={route}> {order.title} </Link>
       </li>
     );
   }
+
+  handleOnClick = () => {
+    // some action...
+    // then redirect
+    this.setState({ redirect: true });
+  };
 
   handleExportCSVButtonClick = onClick => {
     // Custom your onClick event here,
@@ -51,15 +64,26 @@ class DataTable extends Component {
         version="4"
         exportCSV
       >
-        <TableHeaderColumn isKey dataField="id">
+        <TableHeaderColumn isKey dataField="id" dataFormat={idFormatter}>
           Order ID
         </TableHeaderColumn>
         <TableHeaderColumn dataField="created">Order Date</TableHeaderColumn>
-        <TableHeaderColumn dataField="amount">Order Amount</TableHeaderColumn>
+        <TableHeaderColumn dataField="amount" dataFormat={priceFormatter}>
+          Order Amount
+        </TableHeaderColumn>
         <TableHeaderColumn dataField="status">Status</TableHeaderColumn>
       </BootstrapTable>
     );
   }
+}
+
+function priceFormatter(cell, row) {
+  return `\$${cell}`;
+}
+
+function idFormatter(cell, row) {
+  const route = `/orders/${cell}`;
+  return <Link to={route}> {cell} </Link>;
 }
 
 function mapStateToProps({ orders, authenticate }) {

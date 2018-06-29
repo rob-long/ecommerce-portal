@@ -8,6 +8,14 @@ import Dashboard from "./Dashboard";
 import SurveyNew from "./surveys/SurveyNew";
 import SurveyFormReview from "./surveys/SurveyFormReview";
 import Orders from "./Orders";
+import OrderView from "./orders/OrderView";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { faCheckSquare, faCoffee } from "@fortawesome/free-solid-svg-icons";
+
+library.add(fab, faCheckSquare, faCoffee);
 
 class App extends Component {
   componentDidMount() {
@@ -26,6 +34,7 @@ class App extends Component {
                 <Route path="/surveys/new" component={SurveyNew} />
                 <Route path="/surveys/review" component={SurveyFormReview} />
                 <Route path="/surveys" component={Dashboard} />
+                <Route path="/orders/:id" component={OrderView} />
                 <Route path="/orders" component={Orders} />
               </div>
             </Switch>
