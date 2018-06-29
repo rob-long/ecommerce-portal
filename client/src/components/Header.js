@@ -61,14 +61,9 @@ class Header extends Component {
                   Overview
                 </a>
               </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link active"
-                  href="../order-history-light/index.html"
-                >
-                  Order history
-                </a>
-              </li>
+              <NavButton key="order-history" to="/orders">
+                Order History
+              </NavButton>
             </ul>
             <hr className="visible-xs mt-3" />
             <ul className="nav nav-pills nav-stacked flex-column">

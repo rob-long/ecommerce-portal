@@ -2,22 +2,6 @@ const keys = require("../config/keys");
 var stripe = require("stripe")(keys.stripeSecretKey);
 const requireLogin = require("../middlewares/requireLogin");
 
-/*
-module.exports = app => {
-  app.post("/api/stripe", (req, res) => {
-    console.log(req.body);
-    stripe.charges.create({
-      amount: 500,
-      currency: "usd",
-      description: "$5 for 5 credits",
-      source: req.body.id
-    });
-    //res.send(req.user);
-  });
-};
-*/
-
-// refactored using async await
 module.exports = app => {
   app.post("/api/stripe", requireLogin, async (req, res, next) => {
     if (!req.user) {
@@ -38,5 +22,17 @@ module.exports = app => {
     req.user.credits += 5;
     const user = await req.user.save();
     res.send(user);
+  });
+
+  app.get("/api/stripe/orders", requireLogin, async (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).send({ error: "You must be logged in" });
+    }
+    try {
+      const list = await stripe.orders.list({});
+      res.send(list);
+    } catch (e) {
+      console.log(e);
+    }
   });
 };

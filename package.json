@@ -1,8 +1,7 @@
 {
-  "name": "Nutrigene Dashboard Case Study",
+  "name": "Nutrigene Dashboard",
   "version": "1.0.0",
-  "description":
-    "Portal for Nutrigene clients to view their vitamin score and order history",
+  "description": "Portal for Nutrigene clients to view their vitamin score and order history",
   "main": "index.js",
   "engines": {
     "node": "8.11.2",
@@ -13,8 +12,7 @@
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild":
-      "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "webhook": "node_modules/ngrok/bin/ngrok http 5000"
   },
   "author": "Robert Long",

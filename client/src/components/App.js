@@ -7,6 +7,7 @@ import Landing from "./Landing";
 import Dashboard from "./Dashboard";
 import SurveyNew from "./surveys/SurveyNew";
 import SurveyFormReview from "./surveys/SurveyFormReview";
+import Orders from "./Orders";
 
 class App extends Component {
   componentDidMount() {
@@ -17,13 +18,18 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="container">
-          <Header />
-          <Switch>
-            <Route exact path="/" component={Landing} />
-            <Route path="/surveys/new" component={SurveyNew} />
-            <Route path="/surveys/review" component={SurveyFormReview} />
-            <Route path="/surveys" component={Dashboard} />
-          </Switch>
+          <div className="row">
+            <Header />
+            <Switch>
+              <div className="col-md-9 content">
+                <Route exact path="/" component={Landing} />
+                <Route path="/surveys/new" component={SurveyNew} />
+                <Route path="/surveys/review" component={SurveyFormReview} />
+                <Route path="/surveys" component={Dashboard} />
+                <Route path="/orders" component={Orders} />
+              </div>
+            </Switch>
+          </div>
         </div>
       </BrowserRouter>
     );
