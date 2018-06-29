@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import DataTable from "./orders/DataTable";
-import Chart from "./Chart";
+import DataTable from "./DataTable";
 
 class Orders extends Component {
   render() {

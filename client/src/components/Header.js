@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import NavButton from "./NavButton";
 import Payment from "./Payment";
-import { Link } from "react-router-dom";
 
 class Header extends Component {
   login() {

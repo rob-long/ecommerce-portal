@@ -1,34 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { fetchOrders } from "../../actions";
 import { Link } from "react-router-dom";
 import {
   BootstrapTable,
   TableHeaderColumn,
   ExportCSVButton
 } from "react-bootstrap-table";
-import { Redirect } from "react-router";
-
-import { fetchOrders } from "../../actions";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class DataTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirect: false };
-  }
-
   componentDidMount() {
     this.props.fetchOrders();
-  }
-
-  renderOrder(order) {
-    const route = `/orders/${order.id}`;
-    return (
-      <li className="list-group-item" key={order.id}>
-        <Link to={route}> {order.title} </Link>
-      </li>
-    );
   }
 
   handleOnClick = () => {
@@ -64,7 +47,11 @@ class DataTable extends Component {
         version="4"
         exportCSV
       >
-        <TableHeaderColumn isKey dataField="id" dataFormat={idFormatter}>
+        <TableHeaderColumn
+          isKey
+          dataField="id"
+          dataFormat={idFormatter.bind(this)}
+        >
           Order ID
         </TableHeaderColumn>
         <TableHeaderColumn dataField="created">Order Date</TableHeaderColumn>
@@ -78,12 +65,19 @@ class DataTable extends Component {
 }
 
 function priceFormatter(cell, row) {
-  return `\$${cell}`;
+  return `$${cell}`;
 }
 
 function idFormatter(cell, row) {
   const route = `/orders/${cell}`;
-  return <Link to={route}> {cell} </Link>;
+  const order = this.props.orders.filter(order => {
+    return order.id === cell;
+  });
+  return (
+    <Link to={{ pathname: `${route}`, state: { order: order[0] } }}>
+      {cell}
+    </Link>
+  );
 }
 
 function mapStateToProps({ orders, authenticate }) {
