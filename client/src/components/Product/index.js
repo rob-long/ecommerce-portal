@@ -23,6 +23,7 @@ class Product extends Component {
     const thumbnails = images.map((image, index) => {
       return (
         <img
+          alt="product thumbnail"
           key={index}
           className={
             "product-thumbnail " + (index === currentImage ? "selected" : "")
@@ -64,6 +65,7 @@ class Product extends Component {
             </div>
             <div className="col-xs-12 col-lg-10">
               <img
+                alt="full product"
                 className="product-image img-fluid"
                 src={images[currentImage]}
               />

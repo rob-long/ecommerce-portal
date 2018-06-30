@@ -37,6 +37,7 @@ class ProductList extends Component {
     const productList = products.map((product, index) => {
       return (
         <Product
+          key={product.id}
           id={product.id}
           name={product.name}
           caption={product.caption}

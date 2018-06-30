@@ -5,8 +5,7 @@ import NavButton from "./NavButton";
 class Header extends Component {
   constructor(props) {
     super(props);
-    console.log(props.match);
-    this.state = { activeNav: null };
+    this.createNavButton = this.createNavButton.bind(this);
   }
 
   login() {
@@ -15,15 +14,36 @@ class Header extends Component {
       return;
     } else if (auth) {
       return [
-        <NavButton key="credits" to="/surveys">
-          Credits: {auth.credits}
-        </NavButton>,
-        <NavButton key="logout" to="/api/logout">
+        auth.avatarUrl ? (
+          <div key="avatar" className="avatar">
+            <img alt="avatar" src={auth.avatarUrl} className="rounded-circle" />
+          </div>
+        ) : null,
+        <a
+          key="logout"
+          href="/api/logout"
+          className="btn btn-outline-secondary btn-block"
+        >
           Logout
-        </NavButton>
+        </a>
       ];
     }
-    return <NavButton to="/auth/google">Sign in with Google</NavButton>;
+    return (
+      <li className="nav-item">
+        <a href="/auth/google" class="btn btn-outline-secondary btn-block">
+          Sign in with Google
+        </a>
+      </li>
+    );
+  }
+
+  createNavButton(path, label) {
+    const currentpath = this.props.pathname;
+    return (
+      <NavButton key={path} to={path} active={path === currentpath}>
+        {label}
+      </NavButton>
+    );
   }
 
   render() {
@@ -39,7 +59,7 @@ class Header extends Component {
             >
               <span className="sr-only">Toggle nav</span>
             </button>
-            <a className="sidebar-brand img-responsive" href="../index.html">
+            <a className="sidebar-brand img-responsive" href="/">
               <span className="icon icon-leaf sidebar-brand-icon" />
             </a>
           </div>
@@ -57,17 +77,8 @@ class Header extends Component {
             </form>
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">Dashboards</li>
-              <li className="nav-item">
-                <a className="nav-link " href="/">
-                  Your Profile
-                </a>
-              </li>
-              <NavButton key="products" to="/products">
-                Shop
-              </NavButton>
-              <NavButton key="orders" to="/orders">
-                Order History
-              </NavButton>
+              {this.createNavButton("/products", "Shop")}
+              {this.createNavButton("/orders", "Order History")}
             </ul>
             <hr className="visible-xs mt-3" />
             <ul className="nav nav-pills nav-stacked flex-column">
@@ -80,8 +91,11 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth };
+function mapStateToProps({ auth, router }) {
+  return {
+    auth,
+    pathname: router.location.pathname
+  };
 }
 
 export default connect(

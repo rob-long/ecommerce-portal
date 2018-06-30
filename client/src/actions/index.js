@@ -41,6 +41,12 @@ export const handleToken = token => async dispatch => {
   dispatch({ type: ACTIONS.AUTHENTICATE, payload: res.data });
 };
 
+export const handleOrder = (token, sku) => async dispatch => {
+  console.log(sku);
+  const res = await axios.post("/api/stripe/order", { token, sku });
+  dispatch({ type: ACTIONS.MY_ORDERS, payload: res.data });
+};
+
 export const submitSurvey = (values, history) => async dispatch => {
   const res = await axios.post("/api/surveys", values);
   history.push("/surveys");

@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { fetchOrders } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ItemRow = ({ item }) => {
@@ -44,7 +42,7 @@ class OrderView extends Component {
   }
 
   renderShipping(order) {
-    const shipping = order.shipping;
+    //const shipping = order.shipping;
   }
 
   renderItem(item) {

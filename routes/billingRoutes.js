@@ -3,13 +3,11 @@ var stripe = require("stripe")(keys.stripeSecretKey);
 const requireLogin = require("../middlewares/requireLogin");
 
 module.exports = app => {
-  // create charge
+  // create charge and increase credits
   app.post("/api/stripe", requireLogin, async (req, res, next) => {
     if (!req.user) {
       return res.status(401).send({ error: "You must be logged in" });
     }
-
-    console.log("token", req.body.token.id);
     try {
       const charge = await stripe.charges.create({
         amount: 500,
@@ -45,6 +43,40 @@ module.exports = app => {
       res.send(list);
     } catch (e) {
       console.log(e);
+    }
+  });
+
+  // create order and charge
+  app.post("/api/stripe/order", requireLogin, async (req, res, next) => {
+    try {
+      const order = await stripe.orders.create({
+        currency: "usd",
+        email: req.user.email,
+        items: [
+          {
+            type: "sku",
+            parent: req.body.sku.id,
+            quantity: 1
+          }
+        ],
+        shipping: {
+          name: req.body.token.email,
+          address: {
+            line1: "965 Mission St.",
+            city: "San Francisco",
+            state: "CA",
+            postal_code: "94103",
+            country: "US"
+          }
+        }
+      });
+
+      const charge = await stripe.orders.pay(order.id, {
+        source: req.body.token.id
+      });
+      console.log(charge);
+    } catch (error) {
+      console.log(error);
     }
   });
 };

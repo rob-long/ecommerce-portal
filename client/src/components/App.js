@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import Header from "./Header";
@@ -12,7 +13,6 @@ import OrderView from "./Orders/OrderView";
 import Profile from "./Profile";
 import ProductList from "./ProductList/";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import {
   faEnvelope,
@@ -30,7 +30,7 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <ConnectedRouter history={this.props.history}>
         <div className="container">
           <div className="row">
             <Header />
@@ -48,7 +48,7 @@ class App extends Component {
             </div>
           </div>
         </div>
-      </BrowserRouter>
+      </ConnectedRouter>
     );
   }
 }

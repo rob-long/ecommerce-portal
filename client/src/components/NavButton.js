@@ -2,25 +2,13 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class NavButton extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: false
-    };
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-
-  handleOnClick() {
-    this.setState(this.setState({ active: true }));
-  }
-
   render() {
+    const className = this.props.className || "nav-link";
     return (
       <li className="nav-item">
         <Link
-          className="nav-link"
+          className={this.props.active ? `active ${className}` : className}
           to={this.props.to}
-          onClick={this.handleOnClick}
         >
           {this.props.children}
         </Link>

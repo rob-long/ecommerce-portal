@@ -13,13 +13,19 @@ import axios from "axios";
 import "./vendor/js/bootstrap/collapse.js";
 //import $ from "jquery";
 //import "./vendor/dist/toolkit";
+import { createBrowserHistory } from "history";
+import { connectRouter, routerMiddleware } from "connected-react-router";
 window.axios = axios;
 
+const history = createBrowserHistory();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(ReduxPromise, thunk))
+  connectRouter(history)(rootReducer),
+  composeEnhancers(
+    applyMiddleware(routerMiddleware(history), ReduxPromise, thunk)
+  )
 );
+/* compose -> composeEnhancers is for chrome redux extension */
 
 /*
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise, thunk)(
@@ -29,7 +35,7 @@ const createStoreWithMiddleware = applyMiddleware(ReduxPromise, thunk)(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App history={history} />
   </Provider>,
   document.querySelector("#root")
 );
