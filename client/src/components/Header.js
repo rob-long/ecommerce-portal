@@ -31,17 +31,17 @@ class Header extends Component {
     return (
       <li className="nav-item">
         <a href="/auth/google" class="btn btn-outline-secondary btn-block">
-          Sign in with Google
+          <span className="icon icon-google-plus" /> Sign in with Google
         </a>
       </li>
     );
   }
 
-  createNavButton(path, label) {
+  createNavButton(path, label, icon) {
     const currentpath = this.props.pathname;
     return (
       <NavButton key={path} to={path} active={path === currentpath}>
-        {label}
+        <span className={`icon icon-${icon}`} /> {label}
       </NavButton>
     );
   }
@@ -77,8 +77,12 @@ class Header extends Component {
             </form>
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">Dashboards</li>
-              {this.createNavButton("/products", "Shop")}
-              {this.createNavButton("/orders", "Order History")}
+              {this.createNavButton("/products", "Shop", "lab-flask")}
+              {this.createNavButton(
+                "/orders",
+                "Order History",
+                "text-document"
+              )}
             </ul>
             <hr className="visible-xs mt-3" />
             <ul className="nav nav-pills nav-stacked flex-column">

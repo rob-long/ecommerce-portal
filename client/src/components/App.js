@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+// connected router allows us to store router history in redux
 import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import * as actions from "../actions";

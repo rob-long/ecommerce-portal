@@ -10,6 +10,7 @@ class Payment extends Component {
         name="Nutrigene"
         description=""
         stripeKey={process.env.REACT_APP_STRIPE_KEY}
+        shippingAddress="true"
         amount={Number(this.props.amount)}
         token={token => {
           this.props.handleOrder(token, this.props.sku);

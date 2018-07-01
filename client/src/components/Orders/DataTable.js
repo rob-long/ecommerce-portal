@@ -20,12 +20,6 @@ class DataTable extends Component {
     this.setState({ redirect: true });
   };
 
-  handleExportCSVButtonClick = onClick => {
-    // Custom your onClick event here,
-    // it's not necessary to implement this function if you have no any process before onClick
-    console.log("This is my custom function for ExportCSVButton click event");
-    onClick();
-  };
   createCustomExportCSVButton = onClick => {
     return (
       <ExportCSVButton
@@ -39,11 +33,14 @@ class DataTable extends Component {
     const options = {
       exportCSVBtn: this.createCustomExportCSVButton
     };
+    if (!this.props.orders) {
+      return "...Loading";
+    }
 
     return (
       <BootstrapTable
         options={options}
-        data={this.props.orders}
+        data={Object.values(this.props.orders)}
         version="4"
         exportCSV
       >
@@ -58,7 +55,9 @@ class DataTable extends Component {
         <TableHeaderColumn dataField="amount" dataFormat={priceFormatter}>
           Order Amount
         </TableHeaderColumn>
-        <TableHeaderColumn dataField="status">Status</TableHeaderColumn>
+        <TableHeaderColumn dataField="status" dataFormat={statusFormatter}>
+          Status
+        </TableHeaderColumn>
       </BootstrapTable>
     );
   }
@@ -68,16 +67,18 @@ function priceFormatter(cell, row) {
   return `$${cell}`;
 }
 
+function statusFormatter(cell, row) {
+  const classes = {
+    paid: "warning",
+    fulfilled: "success"
+  };
+  const className = classes[cell];
+  return `<button type="button" class="btn btn-xs btn-pill btn-${className}">${cell}</button>`;
+}
+
 function idFormatter(cell, row) {
   const route = `/orders/${cell}`;
-  const order = this.props.orders.filter(order => {
-    return order.id === cell;
-  });
-  return (
-    <Link to={{ pathname: `${route}`, state: { order: order[0] } }}>
-      {cell}
-    </Link>
-  );
+  return <Link to={{ pathname: `${route}` }}>{cell}</Link>;
 }
 
 function mapStateToProps({ orders, authenticate }) {
