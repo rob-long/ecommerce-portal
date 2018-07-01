@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Product from "../Product";
-//import "./ProductList.css";
+import Heading from "../Heading";
 
 class ProductList extends Component {
   constructor(props) {
@@ -36,19 +36,26 @@ class ProductList extends Component {
     }
     const productList = products.map((product, index) => {
       return (
-        <Product
-          key={product.id}
-          id={product.id}
-          name={product.name}
-          caption={product.caption}
-          description={product.description}
-          skus={product.skus.data}
-          images={product.images}
-        />
+        <Fragment>
+          <Product
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            caption={product.caption}
+            description={product.description}
+            skus={product.skus.data}
+            images={product.images}
+          />
+        </Fragment>
       );
     });
 
-    return <div id="products">{productList}</div>;
+    return (
+      <Fragment>
+        <Heading subtitle="Nutrigene" title="Shop" />
+        <div id="products">{productList}</div>
+      </Fragment>
+    );
   }
 }
 

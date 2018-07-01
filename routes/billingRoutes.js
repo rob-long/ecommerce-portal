@@ -6,6 +6,7 @@ const requireLogin = require("../middlewares/requireLogin");
 const mongoose = require("mongoose");
 require("../models/Shipping");
 const Shipping = mongoose.model("shipping");
+const BillingService = require("../services/Billing");
 
 module.exports = app => {
   // create charge and increase credits
@@ -65,6 +66,7 @@ module.exports = app => {
 
   // create order and charge
   app.post("/api/stripe/order", requireLogin, async (req, res, next) => {
+    const token = req.body.token;
     try {
       const order = await stripe.orders.create({
         currency: "usd",
@@ -77,19 +79,19 @@ module.exports = app => {
           }
         ],
         shipping: {
-          name: req.body.token.email,
+          name: token.card.name,
           address: {
-            line1: "965 Mission St.",
-            city: "San Francisco",
-            state: "CA",
-            postal_code: "94103",
-            country: "US"
+            line1: token.card.address_line1,
+            city: token.card.address_city,
+            state: token.card.address_state,
+            postal_code: token.card.address_zip,
+            country: token.card.country
           }
         }
       });
 
       const charge = await stripe.orders.pay(order.id, {
-        source: req.body.token.id
+        source: token.id
       });
       console.log(charge);
     } catch (error) {
@@ -104,29 +106,20 @@ module.exports = app => {
 
   // single label shipping
   app.post("/api/shippo", async (req, res, next) => {
-    console.log("why am i here");
     try {
       const order = await stripe.orders.retrieve(req.body.order_id);
+      console.log(order);
 
-      var addressFrom = {
-        name: "Shawn Ippotle",
-        street1: "215 Clayton St.",
-        city: "San Francisco",
-        state: "CA",
-        zip: "94117",
-        country: "US",
-        phone: "+1 555 341 9393",
-        email: "shippotle@goshippo.com"
-      };
+      var addressFrom = BillingService.addressFrom;
 
       var addressTo = {
-        name: "Mr Hippo",
-        street1: "1801 East Chestnut Ave",
-        city: "Santa Ana",
-        state: "CA",
-        zip: "92701",
-        country: "US",
-        email: "mrhippo@goshippo.com"
+        name: order.shipping.name,
+        street1: order.shipping.address.line1,
+        city: order.shipping.address.city,
+        state: order.shipping.address.state,
+        zip: order.shipping.address.postal_code,
+        country: order.shipping.address.country,
+        email: order.email
       };
 
       var parcel = {

@@ -4,7 +4,8 @@ export const ACTIONS = {
   AUTHENTICATE: "AUTHENTICATE",
   MY_SURVEYS: "MY_SURVEYS",
   MY_ORDERS: "MY_ORDERS",
-  MY_ORDER: "MY_ORDER"
+  MY_ORDER: "MY_ORDER",
+  SAVE_FILE: "SAVE_FILE"
 };
 
 // without redux thunk we would need redux-promise to unpack the promise
@@ -69,4 +70,8 @@ export const fetchOrder = id => async dispatch => {
   const res = await axios.get(`/api/stripe/orders/${id}`);
   console.log(res.data);
   dispatch({ type: ACTIONS.MY_ORDER, payload: res.data });
+};
+
+export const saveFile = data => async dispatch => {
+  dispatch({ type: ACTIONS.SAVE_FILE, payload: data });
 };

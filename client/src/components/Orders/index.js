@@ -1,16 +1,12 @@
 import React, { Component, Fragment } from "react";
 import DataTable from "./DataTable";
+import Heading from "../Heading";
 
 class Orders extends Component {
   render() {
     return (
       <Fragment>
-        <div className="dashhead">
-          <div className="dashhead-titles">
-            <h6 className="dashhead-subtitle">Nutrigene</h6>
-            <h2 className="dashhead-title">Orders</h2>
-          </div>
-        </div>
+        <Heading subtitle="Nutrigene" title="Orders" />
         <DataTable />
       </Fragment>
     );

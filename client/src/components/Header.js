@@ -77,6 +77,7 @@ class Header extends Component {
             </form>
             <ul className="nav nav-pills nav-stacked flex-column">
               <li className="nav-header">Dashboards</li>
+              {this.createNavButton("/health", "Your Health", "heart-outlined")}
               {this.createNavButton("/products", "Shop", "lab-flask")}
               {this.createNavButton(
                 "/orders",

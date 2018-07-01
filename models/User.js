@@ -6,6 +6,7 @@ const userSchema = new Schema({
   googleId: String,
   email: String,
   avatarUrl: String,
+  vitaminScore: Object,
   credits: { type: Number, default: 0 }
 });
 

@@ -6,12 +6,11 @@ import { connect } from "react-redux";
 import * as actions from "../actions";
 import Header from "./Header";
 import Landing from "./Landing";
-import Dashboard from "./Dashboard";
+import Health from "./Health";
 import SurveyNew from "./surveys/SurveyNew";
 import SurveyFormReview from "./surveys/SurveyFormReview";
 import Orders from "./Orders/";
 import OrderView from "./Orders/OrderView";
-import Profile from "./Profile";
 import ProductList from "./ProductList/";
 
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -38,12 +37,9 @@ class App extends Component {
             <div className="col-md-9 content">
               <Switch>
                 <Route exact path="/" component={Landing} />
-                <Route path="/surveys/new" component={SurveyNew} />
-                <Route path="/surveys/review" component={SurveyFormReview} />
-                <Route path="/surveys" component={Dashboard} />
+                <Route path="/health" component={Health} />
                 <Route path="/orders/:id" component={OrderView} />
                 <Route path="/orders" component={Orders} />
-                <Route path="/profile" component={Profile} />
                 <Route path="/products" component={ProductList} />
               </Switch>
             </div>

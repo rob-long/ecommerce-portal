@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { fetchOrder } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Heading from "../Heading";
 import axios from "axios";
 
 const ItemRow = ({ item }) => {
@@ -10,27 +11,31 @@ const ItemRow = ({ item }) => {
     <tr>
       <td className="center">{item.parent}</td>
       <td className="left">{item.description}</td>
-      <td className="right">{item.amount}</td>
       <td className="center">{item.quantity}</td>
       <td className="right">${amount}</td>
     </tr>
   );
 };
 
-/*
-const Contact = ({ shipping }) => {
+const ToAddress = ({ order }) => {
   return (
-    <tr>
-      <td className="center">{item.sku}</td>
-      <td className="left">{item.description}</td>
-      <td className="right">{item.amount}</td>
-      <td className="center">1</td>
-      <td className="right">{item.amount}</td>
-    </tr>
+    <div className="col-sm-6">
+      <h6 className="mb-3">To:</h6>
+      <div>
+        <strong>{order.shipping.name}</strong>
+      </div>
+      <div>{order.shipping.address.line1}</div>
+      <div>{order.shipping.address.city}</div>
+      <div>
+        {order.shipping.address.state}, {order.shipping.address.postal_code}
+      </div>
+      <div>
+        <FontAwesomeIcon icon="envelope" /> {order.email}
+      </div>
+    </div>
   );
 };
 
-*/
 class OrderView extends Component {
   constructor(props) {
     super(props);
@@ -118,6 +123,7 @@ class OrderView extends Component {
     const items = this.props.order.items.map(item => this.renderItem(item));
     return (
       <Fragment>
+        <Heading subtitle="Nutrigene" title="Your Order" />
         <div className="card">
           <div className="card-header">
             Invoice
@@ -139,16 +145,7 @@ class OrderView extends Component {
                 </div>
               </div>
 
-              <div className="col-sm-6">
-                <h6 className="mb-3">To:</h6>
-                <div>
-                  <strong>Bob Mart</strong>
-                </div>
-                <div>Attn: Daniel Marek</div>
-                <div>43-190 Mikolow, Poland</div>
-                <div>Email: marek@daniel.com</div>
-                <div>Phone: +48 123 456 789</div>
-              </div>
+              <ToAddress order={this.props.order} />
             </div>
 
             <div className="table-responsive-sm">
@@ -157,7 +154,6 @@ class OrderView extends Component {
                   <tr>
                     <th className="center">#</th>
                     <th>Item</th>
-                    <th className="right">Unit Cost</th>
                     <th className="center">Qty</th>
                     <th className="right">Total</th>
                   </tr>
@@ -173,16 +169,10 @@ class OrderView extends Component {
                   <tbody>
                     <tr>
                       <td className="left">
-                        <strong>Subtotal</strong>
-                      </td>
-                      <td className="right">$8.497,00</td>
-                    </tr>
-                    <tr>
-                      <td className="left">
                         <strong>Total</strong>
                       </td>
                       <td className="right">
-                        <strong>$7.477,36</strong>
+                        <strong>${this.props.order.amount / 100}</strong>
                       </td>
                     </tr>
                   </tbody>

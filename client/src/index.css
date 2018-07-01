@@ -48,3 +48,11 @@ a.paybutton {
 .react-bs-table-container button {
   margin-top: 0px;
 }
+
+html {
+  overflow-y: scroll;
+}
+
+.btn-block {
+  margin-top: 1.5rem;
+}
