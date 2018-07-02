@@ -5,7 +5,8 @@ export const ACTIONS = {
   MY_SURVEYS: "MY_SURVEYS",
   MY_ORDERS: "MY_ORDERS",
   MY_ORDER: "MY_ORDER",
-  SAVE_FILE: "SAVE_FILE"
+  SAVE_FILE: "SAVE_FILE",
+  CHECKOUT: "CHECKOUT"
 };
 
 // without redux thunk we would need redux-promise to unpack the promise
@@ -43,9 +44,11 @@ export const handleToken = token => async dispatch => {
   dispatch({ type: ACTIONS.AUTHENTICATE, payload: res.data });
 };
 
-export const handleOrder = (token, sku) => async dispatch => {
+export const handleOrder = (token, sku, history) => async dispatch => {
   const res = await axios.post("/api/stripe/order", { token, sku });
-  dispatch({ type: ACTIONS.MY_ORDERS, payload: res.data });
+  console.log(res.data.error);
+  dispatch({ type: ACTIONS.CHECKOUT, payload: res.data });
+  history.push("/orders");
 };
 
 export const submitSurvey = (values, history) => async dispatch => {

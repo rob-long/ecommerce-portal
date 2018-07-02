@@ -36,17 +36,15 @@ class ProductList extends Component {
     }
     const productList = products.map((product, index) => {
       return (
-        <Fragment>
-          <Product
-            key={product.id}
-            id={product.id}
-            name={product.name}
-            caption={product.caption}
-            description={product.description}
-            skus={product.skus.data}
-            images={product.images}
-          />
-        </Fragment>
+        <Product
+          key={product.id}
+          id={product.id}
+          name={product.name}
+          caption={product.caption}
+          description={product.description}
+          skus={product.skus.data}
+          images={product.images}
+        />
       );
     });
 

@@ -69,7 +69,7 @@ class OrderView extends Component {
         <Fragment>
           <button
             type="button"
-            className="btn btn-xs btn-pill dropdown-toggle"
+            className="btn btn-warning btn-xs btn-pill dropdown-toggle"
             data-toggle="dropdown"
           >
             {status}
@@ -87,7 +87,7 @@ class OrderView extends Component {
       );
     }
     return (
-      <button type="button" className="btn btn-xs btn-pill btn-{className}">
+      <button type="button" className="btn btn-xs btn-pill btn-success">
         {status}
       </button>
     );

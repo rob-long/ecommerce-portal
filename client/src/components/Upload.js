@@ -39,6 +39,7 @@ class Upload extends React.Component {
 
     data.append("filename", this.uploadInput.files[0].name);
 
+    /*
     fetch("/api/uploadFile", {
       method: "POST",
       body: data
@@ -47,6 +48,7 @@ class Upload extends React.Component {
         this.setState({ URL: `/${body.file}` });
       });
     });
+    */
   }
 
   render() {

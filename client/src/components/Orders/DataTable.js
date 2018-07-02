@@ -21,12 +21,7 @@ class DataTable extends Component {
   };
 
   createCustomExportCSVButton = onClick => {
-    return (
-      <ExportCSVButton
-        btnText="Download"
-        onClick={() => this.handleExportCSVButtonClick(onClick)}
-      />
-    );
+    return <ExportCSVButton btnText="Download" onClick={() => onClick()} />;
   };
 
   render() {

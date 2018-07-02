@@ -24,9 +24,6 @@ module.exports = app => {
   });
 
   app.post("/api/upload", async (req, res, next) => {
-    console.log("hi");
-    console.log(req.body);
-    console.log(req.user);
     req.user.vitaminScore = req.body;
     const user = await req.user.save();
   });

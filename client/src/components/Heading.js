@@ -9,7 +9,7 @@ const heading = props => {
           <h2 className="dashhead-title">{props.title}</h2>
         </div>
       </div>
-      <hr class="visible-xs mt-3" />
+      <hr className="visible-xs mt-3" />
     </Fragment>
   );
 };

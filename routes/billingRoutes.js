@@ -39,7 +39,6 @@ module.exports = app => {
         customer: req.user.stripeCustomer,
         limit: 100
       });
-      console.log(list);
       res.send(list);
     } catch (e) {
       console.log(e);
@@ -112,9 +111,11 @@ module.exports = app => {
       const charge = await stripe.orders.pay(order.id, {
         customer: user.stripeCustomer
       });
-      console.log(charge);
+      const message = `Order ${charge.id} was processed.`;
+      res.send({ message });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
+      res.send({ message: error.message });
     }
   });
 
@@ -127,8 +128,6 @@ module.exports = app => {
   app.post("/api/shippo", async (req, res, next) => {
     try {
       const order = await stripe.orders.retrieve(req.body.order_id);
-      console.log(order);
-
       var addressFrom = BillingService.addressFrom;
 
       var addressTo = {
@@ -161,35 +160,39 @@ module.exports = app => {
           // asynchronously called
           // Get the first rate in the rates results.
           // Customize this based on your business logic.
-          var rate = shipment.rates[0];
+          if (err) {
+            console.log(err);
+          } else {
+            var rate = shipment.rates[0];
 
-          // Purchase the desired rate.
-          shippo.transaction.create(
-            {
-              rate: rate.object_id,
-              label_file_type: "PDF",
-              async: false
-            },
-            function(err, transaction) {
-              const shipping = new Shipping({
-                stripe_order_id: req.body.order_id,
-                shippo_object_id: transaction.object_id
-              });
-              shipping.save();
+            // Purchase the desired rate.
+            shippo.transaction.create(
+              {
+                rate: rate.object_id,
+                label_file_type: "PDF",
+                async: false
+              },
+              function(err, transaction) {
+                const shipping = new Shipping({
+                  stripe_order_id: req.body.order_id,
+                  shippo_object_id: transaction.object_id
+                });
+                shipping.save();
 
-              stripe.orders.update(req.body.order_id, {
-                status: "fulfilled",
-                metadata: {
-                  tracking_url_provider: transaction.tracking_url_provider
-                },
-                shipping: {
-                  carrier: "USPS",
-                  tracking_number: transaction.tracking_number
-                }
-              });
-              res.send({ url: transaction.tracking_url_provider });
-            }
-          );
+                stripe.orders.update(req.body.order_id, {
+                  status: "fulfilled",
+                  metadata: {
+                    tracking_url_provider: transaction.tracking_url_provider
+                  },
+                  shipping: {
+                    carrier: "USPS",
+                    tracking_number: transaction.tracking_number
+                  }
+                });
+                res.send({ url: transaction.tracking_url_provider });
+              }
+            );
+          }
         }
       );
     } catch (error) {
