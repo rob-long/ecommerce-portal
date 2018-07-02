@@ -33,6 +33,7 @@ class Upload extends React.Component {
       })
         .fromString(content)
         .then(csvRow => {
+          console.log("saving csv file");
           this.props.saveFile(csvRow);
         })
     );
