@@ -7,6 +7,7 @@ const userSchema = new Schema({
   email: String,
   avatarUrl: String,
   vitaminScore: Object,
+  stripeCustomer: String,
   credits: { type: Number, default: 0 }
 });
 

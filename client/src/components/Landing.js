@@ -1,6 +1,11 @@
 import React from "react";
 
-const Landing = () => {
+const Landing = props => {
+  const loginMessage = props.loginMessage ? (
+    <div className="alert alert-danger">
+      Please sign in to access this function.
+    </div>
+  ) : null;
   return (
     <div className="row align-items-center">
       <div className="col-6 mx-auto col-md-6 order-md-2">
@@ -23,6 +28,7 @@ const Landing = () => {
           orders and track your shipments. Please login on the left to access
           the functions.
         </p>
+        {loginMessage}
       </div>
     </div>
   );

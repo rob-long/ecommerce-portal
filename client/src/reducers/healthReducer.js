@@ -31,7 +31,7 @@ export default function(state = null, action) {
           backgroundColor: backgroundColors
         }
       ];
-      const res = axios.post("/api/upload", { labels, datasets });
+      axios.post("/api/upload", { labels, datasets });
       return { labels, datasets };
     default:
       return state;

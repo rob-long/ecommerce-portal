@@ -75,13 +75,13 @@ class OrderView extends Component {
             {status}
           </button>
           <div className="dropdown-menu">
-            <a
+            <button
               onClick={this.makeShippingLabel}
               className="dropdown-item"
               href="#"
             >
               Fulfill this order
-            </a>
+            </button>
           </div>
         </Fragment>
       );
@@ -116,10 +116,6 @@ class OrderView extends Component {
       return "Loading...";
     }
 
-    if (this.props.order.status === "paid") {
-      //this.makeShippingLabel();
-    }
-    console.log(this.props.order);
     const items = this.props.order.items.map(item => this.renderItem(item));
     return (
       <Fragment>

@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-import { HorizontalBar, Bar, Line, Pie } from "react-chartjs-2";
+import { HorizontalBar } from "react-chartjs-2";
 
 class Chart extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {}
-
   static defaultProps = {
     displayTitle: true,
-    legendPosition: "right",
-    location: "City"
+    legendPosition: "right"
   };
 
   render() {
@@ -29,7 +22,8 @@ class Chart extends Component {
               legend: {
                 display: this.props.displayLegend,
                 position: this.props.legendPosition
-              }
+              },
+              responsive: true
             }}
           />
         </div>

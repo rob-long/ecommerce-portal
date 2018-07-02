@@ -52,7 +52,7 @@ class ProductList extends Component {
 
     return (
       <Fragment>
-        <Heading subtitle="Nutrigene" title="Shop" />
+        <Heading key="shop" subtitle="Nutrigene" title="Shop" />
         <div id="products">{productList}</div>
       </Fragment>
     );

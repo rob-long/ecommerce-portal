@@ -44,7 +44,6 @@ export const handleToken = token => async dispatch => {
 };
 
 export const handleOrder = (token, sku) => async dispatch => {
-  console.log(sku);
   const res = await axios.post("/api/stripe/order", { token, sku });
   dispatch({ type: ACTIONS.MY_ORDERS, payload: res.data });
 };
@@ -62,13 +61,11 @@ export const fetchSurveys = user => async dispatch => {
 
 export const fetchOrders = () => async dispatch => {
   const res = await axios.get("/api/stripe/orders");
-  console.log(res.data);
   dispatch({ type: ACTIONS.MY_ORDERS, payload: res.data });
 };
 
 export const fetchOrder = id => async dispatch => {
   const res = await axios.get(`/api/stripe/orders/${id}`);
-  console.log(res.data);
   dispatch({ type: ACTIONS.MY_ORDER, payload: res.data });
 };
 

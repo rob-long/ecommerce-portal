@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import Heading from "../Heading";
 import Chart from "../Chart";
 import Upload from "../Upload";

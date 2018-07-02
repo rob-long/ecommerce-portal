@@ -35,7 +35,11 @@ module.exports = app => {
       return res.status(401).send({ error: "You must be logged in" });
     }
     try {
-      const list = await stripe.orders.list({});
+      const list = await stripe.orders.list({
+        customer: req.user.stripeCustomer,
+        limit: 100
+      });
+      console.log(list);
       res.send(list);
     } catch (e) {
       console.log(e);
@@ -65,12 +69,27 @@ module.exports = app => {
   });
 
   // create order and charge
+  // TODO: token does not update for existing customers
   app.post("/api/stripe/order", requireLogin, async (req, res, next) => {
     const token = req.body.token;
+
     try {
+      let user;
+      if (!req.user.stripeCustomer) {
+        const customer = await stripe.customers.create({
+          description: `Customer for ${req.user.email}`,
+          source: token.id // obtained with Stripe.js
+        });
+        req.user.stripeCustomer = customer.id;
+        user = await req.user.save();
+      } else {
+        user = req.user;
+      }
+
       const order = await stripe.orders.create({
+        customer: user.stripeCustomer,
         currency: "usd",
-        email: req.user.email,
+        email: user.email,
         items: [
           {
             type: "sku",
@@ -91,7 +110,7 @@ module.exports = app => {
       });
 
       const charge = await stripe.orders.pay(order.id, {
-        source: token.id
+        customer: user.stripeCustomer
       });
       console.log(charge);
     } catch (error) {
