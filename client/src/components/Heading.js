@@ -1,13 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 const heading = props => {
   return (
-    <div className="dashhead">
-      <div className="dashhead-titles">
-        <h6 className="dashhead-subtitle">{props.subtitle}</h6>
-        <h2 className="dashhead-title">{props.title}</h2>
+    <Fragment>
+      <div className="dashhead">
+        <div className="dashhead-titles">
+          <h6 className="dashhead-subtitle">{props.subtitle}</h6>
+          <h2 className="dashhead-title">{props.title}</h2>
+        </div>
       </div>
-    </div>
+      <hr class="visible-xs mt-3" />
+    </Fragment>
   );
 };
 
