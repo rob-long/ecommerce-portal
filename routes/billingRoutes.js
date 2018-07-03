@@ -34,6 +34,9 @@ module.exports = app => {
     if (!req.user) {
       return res.status(401).send({ error: "You must be logged in" });
     }
+    if (!req.user.stripeCustomer) {
+      res.send({ data: [] });
+    }
     try {
       const list = await stripe.orders.list({
         customer: req.user.stripeCustomer,

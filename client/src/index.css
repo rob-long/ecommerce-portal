@@ -56,3 +56,7 @@ html {
 .btn-block {
   margin-top: 1.5rem;
 }
+
+a#logout {
+  margin-bottom: 10px;
+}

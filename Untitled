@@ -1,0 +1,40 @@
+<h3>Technology Stack</h3>
+<p>
+  The app runs primarily on front-end ReactJS and back-end ExpressJS
+  connected to MongoDB. The database is primarily used for storing
+  persistent user information such as uploaded vitamin scores.
+</p>
+<h3>Login via Google</h3>
+<p>
+  Before gaining access to the system users must sign-in via Google.
+  Once signed-in the "Your Health", "Shop" and "Order History" links are
+  activated.
+</p>
+<h3>Your Health</h3>
+<p>
+  Initially vitamin scores are uploaded. The app expects the same format
+  as given in the case study files. Once uploaded, the scores are stored
+  in the database and will remain even after logout.
+</p>
+<h3>Shop</h3>
+<p>
+  This was mainly implemented so that we can easily create Stripe
+  orders. All data is pulled from the Orders API. Products and skus are
+  created directly in Stripe. As an example of SKUs, female and male
+  versions of the products were created.
+</p>
+<p>
+  Users can create and pay for orders by clicking on any Pay button.
+  Because we are integrating with Shippo's test account, please use a
+  United States address for shipping if you would like to create a
+  successful order.
+</p>
+<h3>Orders</h3>
+<p>
+  Once an order is paid for, the user is directed to the orders view.
+  The orders view displays the status of the order (paid or fulfilled).
+  In order to demonstrate the ability to fulfill orders using the Shippo
+  API, the app allows you to view an order and click on the paid status
+  in the top right to toggle it to fulfilled. Once fulfilled, a button
+  is added to the Order view which links to tracking information.
+</p>

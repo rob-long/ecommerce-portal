@@ -20,6 +20,7 @@ class Header extends Component {
           </div>
         ) : null,
         <a
+          id="logout"
           key="logout"
           href="/api/logout"
           className="btn btn-outline-secondary btn-block"
