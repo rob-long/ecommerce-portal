@@ -51,7 +51,9 @@ const Landing = props => {
           <p>
             Vitamin scores can be directly uploaded via the app. The app expects
             the same format as given in the case study files. Once uploaded, the
-            scores are stored in the database and will remain even after logout.
+            scores are stored in the database. A "history" chart allows users to
+            view their scores over time once more than 1 score file has been
+            uploaded.
           </p>
           <h3>Shop</h3>
           <p>
