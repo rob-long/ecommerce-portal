@@ -60,3 +60,13 @@ html {
 a#logout {
   margin-bottom: 10px;
 }
+
+#chart-pane {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+form {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

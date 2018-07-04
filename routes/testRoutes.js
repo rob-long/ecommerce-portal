@@ -32,8 +32,10 @@ module.exports = app => {
     });
 
     req.user.vitaminScore = req.body;
-    const user = await req.user.save();
-    const score = await vitaminScore.save();
+    if (Object.keys(req.body).length) {
+      await req.user.save();
+      await vitaminScore.save();
+    }
     const scores = await VitaminScore.find({ _user: req.user.id });
     res.send(scores);
   });

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Product from "../Product";
 import Heading from "../Heading";
+import { BarLoader } from "react-spinners";
 
 class ProductList extends Component {
   constructor(props) {
@@ -31,9 +32,6 @@ class ProductList extends Component {
 
   render() {
     const { products } = this.state;
-    if (!products) {
-      return "...Loading";
-    }
     const productList = products.map((product, index) => {
       return (
         <Product
@@ -51,6 +49,9 @@ class ProductList extends Component {
     return (
       <Fragment>
         <Heading key="shop" subtitle="Nutrigene" title="Shop" />
+        <div className="sweet-loading">
+          <BarLoader color={"#123abc"} loading={!products.length} />
+        </div>
         <div id="products">{productList}</div>
       </Fragment>
     );

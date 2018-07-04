@@ -12,7 +12,7 @@ class Upload extends React.Component {
     this.handleUploadCSV = this.handleUploadCSV.bind(this);
   }
 
-  readFileContent(file) {
+  async readFileContent(file) {
     const reader = new FileReader();
     return new Promise((resolve, reject) => {
       reader.onload = event => resolve(event.target.result);
@@ -26,29 +26,22 @@ class Upload extends React.Component {
 
     const data = new FormData();
     data.append("file", this.uploadInput.files[0]);
-    this.readFileContent(this.uploadInput.files[0]).then(content =>
-      csv({
+    // TODO: this try catch block?
+    try {
+      const content = await this.readFileContent(this.uploadInput.files[0]);
+      if (content.length > 2000) {
+        console.log("exiting");
+        return;
+      }
+      const csvRow = await csv({
         delimiter: "\t",
         output: "csv"
-      })
-        .fromString(content)
-        .then(csvRow => {
-          this.props.saveFile(csvRow);
-        })
-    );
-
-    data.append("filename", this.uploadInput.files[0].name);
-
-    /*
-    fetch("/api/uploadFile", {
-      method: "POST",
-      body: data
-    }).then(response => {
-      response.json().then(body => {
-        this.setState({ URL: `/${body.file}` });
-      });
-    });
-    */
+      }).fromString(content);
+      this.props.saveFile(csvRow);
+      data.append("filename", this.uploadInput.files[0].name);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   render() {

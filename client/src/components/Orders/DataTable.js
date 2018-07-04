@@ -8,6 +8,7 @@ import {
   ExportCSVButton
 } from "react-bootstrap-table";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
+import { BarLoader } from "react-spinners";
 
 class DataTable extends Component {
   componentDidMount() {
@@ -29,7 +30,11 @@ class DataTable extends Component {
       exportCSVBtn: this.createCustomExportCSVButton
     };
     if (!this.props.orders) {
-      return "...Loading";
+      return (
+        <div className="sweet-loading">
+          <BarLoader color={"#123abc"} loading={!this.props.orders} />
+        </div>
+      );
     }
 
     return (
