@@ -68,7 +68,15 @@ function statusFormatter(cell, row) {
     fulfilled: "success"
   };
   const className = classes[cell];
-  return `<button type="button" class="btn btn-xs btn-pill btn-${className}">${cell}</button>`;
+  const route = `/orders/${row.id}`;
+  return (
+    <Link
+      className={"btn btn-xs btn-pill btn-" + className}
+      to={{ pathname: `${route}` }}
+    >
+      {cell}
+    </Link>
+  );
 }
 
 function idFormatter(cell, row) {
