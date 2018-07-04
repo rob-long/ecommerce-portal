@@ -180,8 +180,8 @@ class Health extends Component {
           <div className="alert alert-dark">
             You must upload your scores before this dashboard will display any
             information. Once you have uploaded multiple scores you will be able
-            to view your health history over time. For an example of a chart
-            see: <a href="">example</a>.
+            to view your health history over time. For an example of a vitamin
+            score file: <a href="/example.txt">example</a>.
           </div>
         );
       }

@@ -1,0 +1,23 @@
+	Customer Count	Max Count	Efficiency
+	29.0		0
+H2O2	1.0		0
+Iron	1.0	1.0	100.0
+Ketone	1.0		0
+Molybdenum (Citrate)	1.0	2.0	50.0
+N-acetyl cysteine	4.0	7.0	57.14285714285714
+Omega 3	3.0	6.0	50.0
+Phosphatidylcholine	3.0	3.0	100.0
+Retinol	2.0	3.0	66.66666666666666
+Unsaturated fatty acids	1.0	1.0	100.0
+Vitamin B12	3.0	7.0	42.857142857142854
+Vitamin B6	1.0	2.0	50.0
+Vitamin B9	4.0	7.0	57.14285714285714
+Vitamin D	5.0	8.0	62.5
+Vitamin K	2.0	2.0	100.0
+		33.0	0
+Vitamin C		3.0	0
+Vitamin E		2.0	0
+Vitamin A		5.0	0
+Manganese		3.0	0
+Creatine		1.0	0
+Phosphatidyl Serine		1.0	0
