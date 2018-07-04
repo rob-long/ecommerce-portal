@@ -39,6 +39,7 @@ module.exports = app => {
     }
     try {
       const list = await stripe.orders.list({
+        customer: req.user.stripeCustomer,
         limit: 100
       });
       res.send(list);
