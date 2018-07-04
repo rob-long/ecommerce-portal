@@ -2,8 +2,9 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const Mailer = require("../services/Mailer");
 require("../models/User");
-const Survey = mongoose.model("users");
+require("../models/VitaminScore");
 
+const VitaminScore = mongoose.model("vitaminScores");
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
@@ -23,14 +24,22 @@ module.exports = app => {
     });
   });
 
-  app.post("/api/upload", async (req, res, next) => {
+  app.post("/api/scores", async (req, res, next) => {
+    const vitaminScore = new VitaminScore({
+      score: req.body,
+      _user: req.user.id,
+      dateUploaded: Date.now()
+    });
+
     req.user.vitaminScore = req.body;
-    console.log("i am here");
-    console.log(req.body);
     const user = await req.user.save();
+    const score = await vitaminScore.save();
+    const scores = await VitaminScore.find({ _user: req.user.id });
+    res.send(scores);
   });
 
-  app.get("/api/upload", (req, res, next) => {
-    res.send("ok");
+  app.get("/api/scores", async (req, res, next) => {
+    const scores = await VitaminScore.find({ _user: req.user.id });
+    res.send(scores);
   });
 };

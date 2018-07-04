@@ -5,7 +5,7 @@ export const ACTIONS = {
   MY_SURVEYS: "MY_SURVEYS",
   MY_ORDERS: "MY_ORDERS",
   MY_ORDER: "MY_ORDER",
-  SAVE_FILE: "SAVE_FILE",
+  MY_SCORES: "MY_SCORES",
   CHECKOUT: "CHECKOUT"
 };
 
@@ -73,5 +73,18 @@ export const fetchOrder = id => async dispatch => {
 };
 
 export const saveFile = data => async dispatch => {
-  dispatch({ type: ACTIONS.SAVE_FILE, payload: data });
+  const filterRows = data.filter(row => row[3] > 0);
+  const vitaminScore = filterRows.reduce((acc, curr, i) => {
+    acc[curr[0]] = curr[3];
+    return acc;
+  }, {});
+  // upload returns all scores
+  const res = await axios.post("/api/scores", vitaminScore);
+  console.log(res.data);
+  dispatch({ type: ACTIONS.MY_SCORES, payload: res.data });
+};
+
+export const fetchScores = () => async dispatch => {
+  const res = await axios.get("/api/scores");
+  dispatch({ type: ACTIONS.MY_SCORES, payload: res.data });
 };
