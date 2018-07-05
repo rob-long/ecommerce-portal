@@ -5,6 +5,7 @@ import Chart from "../Chart";
 import Upload from "../Upload";
 import { fetchScores } from "../../actions";
 import $ from "jquery";
+import { BarLoader } from "react-spinners";
 
 const chartConfig = {
   score: {
@@ -172,55 +173,70 @@ class Health extends Component {
   }
 
   renderChart(chartID) {
-    if (this.props.health) {
-      const chartData = this.makeChartData(chartID);
+    const chartData = this.makeChartData(chartID);
 
-      if (!chartData) {
-        return (
-          <div className="alert alert-dark">
-            You must upload your scores before this dashboard will display any
-            information. Once you have uploaded multiple scores you will be able
-            to view your health history over time. For an example of a vitamin
-            score file: <a href="/example.txt">example</a>.
-          </div>
-        );
-      }
+    if (!chartData) {
       return (
-        <div>
-          <ul className="nav nav-bordered">
-            <li className="nav-item">
-              <a
-                className="nav-link active"
-                href="#score"
-                id="score"
-                onClick={this.handleNavClick}
-              >
-                Score
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                href="#history"
-                id="history"
-                onClick={this.handleNavClick}
-              >
-                History
-              </a>
-            </li>
-          </ul>
-          <div id="chart-pane">
-            <Chart
-              title="Vitamin Score"
-              maintainAspectRatio={
-                chartConfig[this.state.tab].maintainAspectRatio
-              }
-              type={chartConfig[this.state.tab].type}
-              chartData={chartData}
-            />
-          </div>
-          {this.renderList()}
+        <div className="alert alert-dark">
+          You must upload your scores before this dashboard will display any
+          information. Once you have uploaded multiple scores you will be able
+          to view your health history over time. For an example of a vitamin
+          score file: <a href="/example.txt">example</a>.
         </div>
+      );
+    }
+    return (
+      <div>
+        <ul className="nav nav-bordered">
+          <li className="nav-item">
+            <a
+              className="nav-link active"
+              href="#score"
+              id="score"
+              onClick={this.handleNavClick}
+            >
+              Score
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#history"
+              id="history"
+              onClick={this.handleNavClick}
+            >
+              History
+            </a>
+          </li>
+        </ul>
+        <div id="chart-pane">
+          <Chart
+            title="Vitamin Score"
+            maintainAspectRatio={
+              chartConfig[this.state.tab].maintainAspectRatio
+            }
+            type={chartConfig[this.state.tab].type}
+            chartData={chartData}
+          />
+        </div>
+        {this.renderList()}
+      </div>
+    );
+  }
+
+  renderBody() {
+    if (!this.props.health) {
+      return (
+        <div className="sweet-loading">
+          <BarLoader color={"#123abc"} loading={!this.props.health} />
+        </div>
+      );
+    } else {
+      return (
+        <Fragment>
+          <Upload />
+          {this.renderChart(this.state.chartID)}
+        </Fragment>
       );
     }
   }
@@ -229,9 +245,7 @@ class Health extends Component {
     return (
       <Fragment>
         <Heading subtitle="Nutrigene" title="Your Health" />
-
-        <Upload />
-        {this.renderChart(this.state.chartID)}
+        {this.renderBody()}
       </Fragment>
     );
   }
