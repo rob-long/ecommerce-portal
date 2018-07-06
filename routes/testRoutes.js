@@ -1,6 +1,7 @@
 const passport = require("passport");
 const mongoose = require("mongoose");
 const Mailer = require("../services/Mailer");
+const requireLogin = require("../middlewares/requireLogin");
 require("../models/User");
 require("../models/VitaminScore");
 
@@ -14,7 +15,7 @@ module.exports = app => {
   app.use(fileUpload());
   app.use("/public", express.static(__dirname + "/public"));
 
-  app.post("/api/uploadFile", (req, res, next) => {
+  app.post("/api/uploadFile", requireLogin, (req, res, next) => {
     let imageFile = req.files.file;
     imageFile.mv(`${__dirname}/public/${req.body.filename}.jpg`, function(err) {
       if (err) {
@@ -24,7 +25,7 @@ module.exports = app => {
     });
   });
 
-  app.post("/api/scores", async (req, res, next) => {
+  app.post("/api/scores", requireLogin, async (req, res, next) => {
     const vitaminScore = new VitaminScore({
       score: req.body,
       _user: req.user.id,
@@ -40,7 +41,7 @@ module.exports = app => {
     res.send(scores);
   });
 
-  app.get("/api/scores", async (req, res, next) => {
+  app.get("/api/scores", requireLogin, async (req, res, next) => {
     const scores = await VitaminScore.find({ _user: req.user.id });
     res.send(scores);
   });
